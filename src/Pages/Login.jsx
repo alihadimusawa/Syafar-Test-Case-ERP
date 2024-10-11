@@ -50,7 +50,7 @@ function Login(props) {
 
                 <div className="inputBoxContainer">
                     <h3>Email</h3>
-                    <input type="email" id="email" name="email" value={email} onChange={changeEmail} />
+                    <input type="email" id="email" name="email" value={email} onChange={changeEmail} placeholder="jokowidodo@sales.com"/>
 
                     <h3>Confirm Password</h3>
                     <input type="password" id="password" name="password" value={password} onChange={changePassword} />

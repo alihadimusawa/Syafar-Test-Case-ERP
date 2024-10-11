@@ -5,6 +5,7 @@ import Register from "./Pages/Register.jsx";
 import Login from "./Pages/Login.jsx";
 import Homepage from './Pages/Homepage.jsx';
 import Preview from './Pages/Preview.jsx'; // Import the Preview component
+import AddSample from './Pages/AddSample.jsx';
 
 var count = 0;
 
@@ -32,7 +33,9 @@ function App() {
                     <Route path="/" element={<Login listOfAccounts={accounts} />} />
                     <Route path="/register" element={<Register addAccount={addAccount} />} />
                     <Route path="/homepage" element={<Homepage />} />
-                    <Route path="/preview" element={<Preview />} /> {/* Add this route */}
+                    <Route path="/preview" element={<Preview />} />
+                    <Route path="/addSample" element={<AddSample />} />
+                    
                 </Routes>
             </Router>
         </StrictMode>

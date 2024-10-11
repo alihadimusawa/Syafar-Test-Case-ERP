@@ -1,0 +1,39 @@
+.addSample{
+    background-color: gray;
+    padding: 2vw;
+    margin-top: 1vw;
+}
+
+.addSampleContainer{
+    display: flex;
+    flex-direction: row !important;
+    width: 100%;
+    border: 1px solid black;
+    justify-content: space-between;
+    margin-bottom: 2vw;
+}
+
+.sampleLeft{
+    width: 60%;
+}
+
+.sampleLeft select{
+    width: 96%;
+}
+
+.sampleRight{
+    width: 40%;
+    border-left: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addSample h1{
+    margin: 0;
+}
+
+.sampleLeft{
+    display: flex;
+    flex-direction: column;
+}
