@@ -8,7 +8,7 @@ var count = 1;
 
 function Homepage() {
     const navigate = useNavigate();
-    const location = useLocation(); // Use location to get state
+    const location = useLocation();
     const [isExportVisible, setIsExportVisible] = useState(false);
 
     const [listOfSample, setListOfSample] = useState([
@@ -27,51 +27,59 @@ function Homepage() {
         }
     ]);
 
-    function addSampleRedirect() {
-        navigate("/addSample", { state: { addSample } }); // Pass addSample to AddSample page
-    }
-    
     function getCurrentDate() {
         const date = new Date();
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so add 1
         const year = date.getFullYear();
-        
+
         return `${day}/${month}/${year}`;
     }
 
-    function addSample(client, title, type, weight, unit, purpose) {
+    function addToSample(client, title, type, weight, unit, purpose) {
         let tempDate = getCurrentDate();
         count++;
-        setListOfSample((preValue) => {
-            return [
-                ...preValue,
-                {
-                    id: count,
-                    tanggalInput: tempDate,
-                    namaClient: client,
-                    judulSampel: title,
-                    jenisSampel: type,
-                    beratSampel: weight,
-                    unitSatuan: unit,
-                    tujuanUji: purpose
-                }
-            ];
-        });
+        setListOfSample((preValue) => [
+            ...preValue,
+            {
+                id: count,
+                tanggalInput: tempDate,
+                namaClient: client,
+                judulSampel: title,
+                jenisSampel: type,
+                beratSampel: weight,
+                unitSatuan: unit,
+                tujuanUji: purpose
+            }
+        ]);
     }
-    
+
+    function addSampleRedirect() {
+        console.log("Add Sample redirect");
+        navigate("/addSample"); // Pass addSample to AddSample page
+    }
 
     function deleteSample(id) {
-        setListOfSample((preValue) => {
-            return preValue.filter((sample) => sample.id !== id);
-        });
+        setListOfSample((preValue) => preValue.filter((sample) => sample.id !== id));
     }
 
     // Use useEffect to check for id in location state
     useEffect(() => {
         const { id } = location.state || {};
         if (id) {
-            deleteSample(id); // Call deleteSample if id exists
+            deleteSample(id);
+        }
+
+        const { sampleData } = location.state || {};
+        if (sampleData) {
+            addToSample(
+                sampleData.clientName,
+                sampleData.title,
+                sampleData.sampleType,
+                sampleData.weight,
+                sampleData.weightUnit,
+                sampleData.purpose
+            );
         }
     }, [location.state]);
 
@@ -90,10 +98,8 @@ function Homepage() {
     return (
         <div className="page">
             <Header changeAdmin={changeAdmin} logout={logout} homepage={true} />
-
             <div className="homepage">
                 <h1>Take Sample</h1>
-
                 {listOfSample.map((sample, index) => (
                     <SampleSummary
                         key={index}
@@ -107,7 +113,6 @@ function Homepage() {
                         deleteSample={deleteSample}
                     />
                 ))}
-
                 <button className="addButton" onClick={addSampleRedirect}>
                     <img src="../src/assets/plus icon.png" alt="plus icon" />
                 </button>

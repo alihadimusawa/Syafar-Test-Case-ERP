@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import BigButton from '../components/BigButton';
 import "./addSample.css";
@@ -7,36 +7,32 @@ import "./addSample.css";
 function AddSample() {
     const navigate = useNavigate();
 
-    // Inside AddSample component
-    const location = useLocation(); // Get the location object
-    const { addSample } = location.state || {}; // Destructure addSample from location.state
-    
-    function handleSubmit() {
-        if (addSample) {
-            // Call the passed addSample function
-            addSample(
-                sampleData.clientName,
-                sampleData.title,
-                sampleData.sampleType,
-                sampleData.weight,
-                sampleData.weightUnit,
-                sampleData.purpose
-            );
-            navigate("/homepage"); // Redirect back to homepage after submission
-        } else {
-            alert("Error: addSample function not found.");
-        }
-    }
-    
-    const [image, setImage] = useState(null); // State to store the uploaded image
+    const [image, setImage] = useState(null);
     const [sampleData, setSampleData] = useState({
-        clientName: "PT Guugle", // Default option
+        clientName: "PT Guugle",
         title: "",
-        sampleType: "Soil", // Default option
+        sampleType: "Soil",
         weight: "",
-        weightUnit: "kg", // Default option
+        weightUnit: "kg",
         purpose: ""
     });
+
+    function handleImageUpload(event) {
+        const file = event.target.files[0];
+        setImage(URL.createObjectURL(file));
+    }
+
+    function handleInputChange(event) {
+        const { name, value } = event.target;
+        setSampleData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    }
+
+    function handleSubmit() {
+        navigate("/homepage", { state: { sampleData } }); // Pass the sampleData to Homepage
+    }
 
     function homepageRedirect() {
         navigate("/homepage");
@@ -46,45 +42,12 @@ function AddSample() {
         navigate("/");
     }
 
-    // Function to handle image upload
-    function handleImageUpload(event) {
-        const file = event.target.files[0];
-        setImage(URL.createObjectURL(file)); // Create a preview URL for the image
-    }
-
-    // Function to submit the sample and call addSample from the location state
-    function handleSubmit() {
-        if (addSample) {
-            addSample(
-                sampleData.clientName,
-                sampleData.title,
-                sampleData.sampleType,
-                sampleData.weight,
-                sampleData.weightUnit,
-                sampleData.purpose
-            );
-            navigate("/homepage"); // Redirect back to homepage after submission
-        } else {
-            alert("Error: addSample function not found.");
-        }
-    }
-
-    // Function to handle changes in the form inputs
-    function handleInputChange(event) {
-        const { name, value } = event.target;
-        setSampleData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    }
-
     return (
         <div>
             <Header homepage={false} logout={logout}></Header>
             <div className='addSample'>
                 <h1>Add your sample</h1>
                 <div className='addSampleContainer'>
-
                     <div className='sampleLeft'>
                         <p>Client Name</p>
                         <select id="clientName" name="clientName" onChange={handleInputChange} value={sampleData.clientName}>
@@ -134,7 +97,7 @@ function AddSample() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default AddSample;
