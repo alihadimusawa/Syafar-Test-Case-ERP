@@ -114,7 +114,7 @@ function Homepage() {
                     />
                 ))}
                 <button className="addButton" onClick={addSampleRedirect}>
-                    <img src="../src/assets/plus icon.png" alt="plus icon" />
+                    <img src="../src/assets/plus.png" alt="plus icon" />
                 </button>
             </div>
         </div>
