@@ -1,0 +1,82 @@
+.homepage{
+    width: 100%;
+    border: 1px solid black;
+    background-color: gray;
+    margin-top: 2vw;
+    height: 100vh;
+    justify-content: start;
+}
+
+.sampleSummary{
+    border: 1px solid white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 5vw;
+}
+
+.buttonContainer{
+    display: flex;
+    flex-direction: row;
+    width:20%;
+    justify-content: space-around;
+}
+
+#left{
+    border: 0px !important;
+}
+
+.left button{
+    width: 8vw;
+}
+
+.left, .right{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 5vw;
+}
+
+.buttonContainer button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.buttonContainer button:hover{
+    background-color: white;
+}
+
+.head{
+    font-weight: 900;
+}
+
+.addButton{
+    width: 6vw;
+    padding: 1vw;
+    align-self: center;
+    height: 10vh;
+    margin-top: 2vw;
+    overflow: hidden;
+    border-radius: 10000px;
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.addButton:hover{
+    border: 1px solid white;
+    background-color: gray;
+}
+
+.addButton img{
+    width: 4vw;
+    height: 8vh;
+    align-self: center;
+}
+
+.export{
+    visibility: hidden;
+}
