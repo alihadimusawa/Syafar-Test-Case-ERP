@@ -51,7 +51,7 @@ function AddSample() {
                     <div className='sampleLeft'>
                         <p>Client Name</p>
                         <select id="clientName" name="clientName" onChange={handleInputChange} value={sampleData.clientName}>
-                            <option value="PT Guugle">PT Guugle</option>
+                            <option valaue="PT Guugle">PT Guugle</option>
                             <option value="PT Shapee">PT Shapee</option>
                             <option value="PT Warungpedia">PT Warungpedia</option>
                         </select>

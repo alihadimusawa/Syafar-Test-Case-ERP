@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"; // Import useEffect
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import SampleSummary from "../components/SampleSummary";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -11,32 +11,40 @@ function Homepage() {
     const location = useLocation();
     const [isExportVisible, setIsExportVisible] = useState(false);
 
-    const [listOfSample, setListOfSample] = useState([
-        {
-            id: count,
-            tanggalInput: "12/03/2004",
-            namaClient: "PT Syafar Media",
-            judulSampel: "Sampel untuk kesuburan tanah",
-            jenisSampel: "Tanah",
-            beratSampel: "12",
-            unitSatuan: "Kg",
-            tujuanUji: "Uji asam",
-            kotaPengambilan: "Jakarta",
-            titikPengambilan: "-6.2146,106.8451",
-            negaraPengambilan: "Indonesia"
-        }
-    ]);
+    const [listOfSample, setListOfSample] = useState(() => {
+        // Load the saved samples from LocalStorage or use default if none exist
+        const savedSamples = localStorage.getItem("samples");
+        return savedSamples ? JSON.parse(savedSamples) : [
+            {
+                id: count,
+                tanggalInput: "12/03/2004",
+                namaClient: "PT Syafar Media",
+                judulSampel: "Sampel untuk kesuburan tanah",
+                jenisSampel: "Tanah",
+                beratSampel: "12",
+                unitSatuan: "Kg",
+                tujuanUji: "Uji asam",
+                kotaPengambilan: "Jakarta",
+                titikPengambilan: "-6.2146,106.8451",
+                negaraPengambilan: "Indonesia"
+            }
+        ];
+    });
+
+    // Save the list of samples to LocalStorage whenever it changes
+    useEffect(() => {
+        localStorage.setItem("samples", JSON.stringify(listOfSample));
+    }, [listOfSample]);
 
     function getCurrentDate() {
         const date = new Date();
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so add 1
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
-
         return `${day}/${month}/${year}`;
     }
 
-    function addToSample(client, title, type, weight, unit, purpose) {
+    function addToSample(client, title, type, weight, unit, purpose, image) {
         let tempDate = getCurrentDate();
         count++;
         setListOfSample((preValue) => [
@@ -49,21 +57,22 @@ function Homepage() {
                 jenisSampel: type,
                 beratSampel: weight,
                 unitSatuan: unit,
-                tujuanUji: purpose
+                tujuanUji: purpose,
+                image: image // Store the image URL
             }
         ]);
     }
+    
 
     function addSampleRedirect() {
         console.log("Add Sample redirect");
-        navigate("/addSample"); // Pass addSample to AddSample page
+        navigate("/addSample");
     }
 
     function deleteSample(id) {
         setListOfSample((preValue) => preValue.filter((sample) => sample.id !== id));
     }
 
-    // Use useEffect to check for id in location state
     useEffect(() => {
         const { id } = location.state || {};
         if (id) {
@@ -117,6 +126,8 @@ function Homepage() {
                     <img src="../src/assets/plus.png" alt="plus icon" />
                 </button>
             </div>
+
+            {console.log(listOfSample)};
         </div>
     );
 }
